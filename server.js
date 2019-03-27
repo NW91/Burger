@@ -14,3 +14,18 @@ app.use(express.static("public"));
 //express middleware body parser
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(methodOverride('_method'));
+
+//setting handlebars
+var exphbs = require("express-handlebars");
+app.engine("handlebars", exphbs({ default: "main" }));
+app.set("view engine", "handlebars");
+
+//connects to routes files in the controller folder
+var routes = require("./controllers/burgers_controller");
+app.use("/", routes);
+
+//starting the server
+app.listen(PORT, function() {
+    console.log("Server Listening")
+});
